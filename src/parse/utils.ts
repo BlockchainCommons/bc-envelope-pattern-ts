@@ -12,7 +12,10 @@
 
 import type { Cbor } from "@blockchaincommons/dcbor-compat";
 import { parseDcborItemPartial } from "@blockchaincommons/dcbor-parse";
-import { type Pattern as DCBORPattern, parse as parseDcborPattern } from "@blockchaincommons/dcbor-pattern";
+import {
+  type Pattern as DCBORPattern,
+  parse as parseDcborPattern,
+} from "@blockchaincommons/dcbor-pattern";
 import {
   type Result,
   ok,

@@ -12,7 +12,12 @@
 
 import { Envelope } from "@blockchaincommons/envelope";
 import type { Cbor } from "@blockchaincommons/dcbor-compat";
-import { cbor as toCbor, cborData, cborEquals, type CborInput } from "@blockchaincommons/dcbor-compat";
+import {
+  cbor as toCbor,
+  cborData,
+  cborEquals,
+  type CborInput,
+} from "@blockchaincommons/dcbor-compat";
 import {
   type Pattern as DCBORPattern,
   patternPathsWithCaptures as dcborPatternPathsWithCaptures,
