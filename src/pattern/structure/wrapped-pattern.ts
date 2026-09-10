@@ -1,0 +1,236 @@
+/**
+ * Copyright © 2023-2026 Blockchain Commons, LLC
+ * Copyright © 2025-2026 Parity Technologies
+ *
+ *
+ * @blockchaincommons/envelope-pattern - Wrapped pattern matching
+ *
+ * This is a 1:1 TypeScript port of bc-envelope-pattern-rust wrapped_pattern.rs
+ *
+ * @module envelope-pattern/pattern/structure/wrapped-pattern
+ */
+
+import type { Envelope } from "@blockchaincommons/envelope";
+import type { Path } from "../../format";
+import type { Matcher } from "../matcher";
+import type { Instr, Axis } from "../vm";
+import type { Pattern } from "../index";
+
+// Forward declaration for Pattern factory
+let createStructureWrappedPattern: ((pattern: WrappedPattern) => Pattern) | undefined;
+
+// Forward declaration for `Pattern::any()` so that
+// `WrappedPattern.unwrap()` can mirror Rust's
+// `Self::unwrap_matching(Pattern::any())` factory exactly. Resolved during
+// pattern-module registration to avoid the circular import.
+let createAnyPattern: (() => Pattern) | undefined;
+
+// Forward declaration for pattern dispatch (avoids circular imports)
+let dispatchPatternPathsWithCaptures:
+  ((pattern: Pattern, haystack: Envelope) => [Path[], Map<string, Path[]>]) | undefined;
+let dispatchPatternCompile:
+  ((pattern: Pattern, code: Instr[], literals: Pattern[], captures: string[]) => void) | undefined;
+let dispatchPatternToString: ((pattern: Pattern) => string) | undefined;
+
+export function registerWrappedPatternFactory(factory: (pattern: WrappedPattern) => Pattern): void {
+  createStructureWrappedPattern = factory;
+}
+
+export function registerWrappedPatternAny(factory: () => Pattern): void {
+  createAnyPattern = factory;
+}
+
+export function registerWrappedPatternDispatch(dispatch: {
+  pathsWithCaptures: (pattern: Pattern, haystack: Envelope) => [Path[], Map<string, Path[]>];
+  compile: (pattern: Pattern, code: Instr[], literals: Pattern[], captures: string[]) => void;
+  toString: (pattern: Pattern) => string;
+}): void {
+  dispatchPatternPathsWithCaptures = dispatch.pathsWithCaptures;
+  dispatchPatternCompile = dispatch.compile;
+  dispatchPatternToString = dispatch.toString;
+}
+
+/**
+ * Pattern type for wrapped pattern matching.
+ *
+ * Corresponds to the Rust `WrappedPattern` enum in wrapped_pattern.rs
+ */
+export type WrappedPatternType =
+  { readonly type: "Any" } | { readonly type: "Unwrap"; readonly pattern: Pattern };
+
+/**
+ * Represents patterns for matching wrapped envelopes.
+ *
+ * Corresponds to the Rust `WrappedPattern` enum in wrapped_pattern.rs
+ */
+export class WrappedPattern implements Matcher {
+  private readonly _pattern: WrappedPatternType;
+
+  private constructor(pattern: WrappedPatternType) {
+    this._pattern = pattern;
+  }
+
+  /**
+   * Creates a new WrappedPattern that matches any wrapped envelope without descending.
+   */
+  static new(): WrappedPattern {
+    return new WrappedPattern({ type: "Any" });
+  }
+
+  /**
+   * Creates a new WrappedPattern that matches a wrapped envelope and also matches
+   * on its unwrapped content.
+   */
+  static unwrapMatching(pattern: Pattern): WrappedPattern {
+    return new WrappedPattern({ type: "Unwrap", pattern });
+  }
+
+  /**
+   * Creates a new WrappedPattern that matches any wrapped envelope and descends into it.
+   *
+   * Mirrors Rust `WrappedPattern::unwrap()` which delegates to
+   * `Self::unwrap_matching(Pattern::any())`. The `any` factory is wired in
+   * during module-load registration to break the circular import on the
+   * top-level `Pattern` type.
+   */
+  static unwrap(): WrappedPattern {
+    if (createAnyPattern === undefined) {
+      throw new Error("WrappedPattern.unwrap() requires Pattern.any factory; not registered");
+    }
+    return WrappedPattern.unwrapMatching(createAnyPattern());
+  }
+
+  /**
+   * Gets the pattern type.
+   */
+  get patternType(): WrappedPatternType {
+    return this._pattern;
+  }
+
+  /**
+   * Gets the inner pattern if this is an Unwrap type, undefined otherwise.
+   */
+  innerPattern(): Pattern | undefined {
+    return this._pattern.type === "Unwrap" ? this._pattern.pattern : undefined;
+  }
+
+  pathsWithCaptures(haystack: Envelope): [Path[], Map<string, Path[]>] {
+    const subject = haystack.subject();
+
+    if (!subject.isWrapped()) {
+      return [[], new Map<string, Path[]>()];
+    }
+
+    let paths: Path[];
+
+    switch (this._pattern.type) {
+      case "Any":
+        // Just match the wrapped envelope itself, don't descend
+        paths = [[haystack]];
+        break;
+      case "Unwrap": {
+        // Match the content of the wrapped envelope
+        const unwrapped = subject.tryUnwrap?.();
+        if (unwrapped !== undefined && dispatchPatternPathsWithCaptures !== undefined) {
+          const [innerPaths] = dispatchPatternPathsWithCaptures(this._pattern.pattern, unwrapped);
+          paths = innerPaths.map((path) => {
+            // Add the current envelope to the path
+            return [haystack, ...path];
+          });
+        } else {
+          paths = [];
+        }
+        break;
+      }
+    }
+
+    return [paths, new Map<string, Path[]>()];
+  }
+
+  paths(haystack: Envelope): Path[] {
+    return this.pathsWithCaptures(haystack)[0];
+  }
+
+  matches(haystack: Envelope): boolean {
+    return this.paths(haystack).length > 0;
+  }
+
+  compile(code: Instr[], literals: Pattern[], captures: string[]): void {
+    if (createStructureWrappedPattern === undefined) {
+      throw new Error("WrappedPattern factory not registered");
+    }
+
+    switch (this._pattern.type) {
+      case "Any": {
+        // Just match the wrapped envelope itself, don't descend
+        const idx = literals.length;
+        literals.push(createStructureWrappedPattern(this));
+        code.push({ type: "MatchStructure", literalIndex: idx });
+        break;
+      }
+      case "Unwrap": {
+        // First match that it's wrapped
+        const idx = literals.length;
+        literals.push(createStructureWrappedPattern(WrappedPattern.new()));
+        code.push({ type: "MatchStructure", literalIndex: idx });
+
+        // Then move into inner envelope
+        const axis: Axis = "Wrapped";
+        code.push({ type: "PushAxis", axis });
+
+        // Then match the pattern
+        if (dispatchPatternCompile !== undefined) {
+          dispatchPatternCompile(this._pattern.pattern, code, literals, captures);
+        }
+        break;
+      }
+    }
+  }
+
+  isComplex(): boolean {
+    return false;
+  }
+
+  toString(): string {
+    switch (this._pattern.type) {
+      case "Any":
+        return "wrapped";
+      case "Unwrap": {
+        // Rust collapses `Unwrap(Pattern::any())` to the bare keyword
+        // `unwrap`. We detect the "any" pattern by inspecting the tagged
+        // union shape rather than by string compare so this stays correct
+        // if `Pattern::any()`'s display ever changes.
+        const inner = this._pattern.pattern;
+        const isAny = inner.type === "Meta" && inner.pattern.type === "Any";
+        if (isAny) {
+          return "unwrap";
+        }
+        const patternStr =
+          dispatchPatternToString !== undefined ? dispatchPatternToString(inner) : "?";
+        return `unwrap(${patternStr})`;
+      }
+    }
+  }
+
+  /**
+   * Equality comparison.
+   */
+  equals(other: WrappedPattern): boolean {
+    if (this._pattern.type !== other._pattern.type) {
+      return false;
+    }
+    if (this._pattern.type === "Any") {
+      return true;
+    }
+    const thisPattern = (this._pattern as { type: "Unwrap"; pattern: Pattern }).pattern;
+    const otherPattern = (other._pattern as { type: "Unwrap"; pattern: Pattern }).pattern;
+    return thisPattern === otherPattern;
+  }
+
+  /**
+   * Hash code for use in Maps/Sets.
+   */
+  hashCode(): number {
+    return this._pattern.type === "Any" ? 0 : 1;
+  }
+}

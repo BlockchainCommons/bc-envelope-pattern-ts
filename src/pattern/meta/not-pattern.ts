@@ -1,0 +1,95 @@
+/**
+ * Copyright © 2023-2026 Blockchain Commons, LLC
+ * Copyright © 2025-2026 Parity Technologies
+ *
+ *
+ * @blockchaincommons/envelope-pattern - Not pattern matching
+ *
+ * This is a 1:1 TypeScript port of bc-envelope-pattern-rust not_pattern.rs
+ *
+ * @module envelope-pattern/pattern/meta/not-pattern
+ */
+
+import type { Envelope } from "@blockchaincommons/envelope";
+import type { Path } from "../../format";
+import { matchPattern, dispatchPatternToString } from "../matcher";
+import type { Instr } from "../vm";
+import type { Pattern } from "../index";
+import type { Matcher } from "../matcher";
+
+// Forward declaration for Pattern factory (used for late binding)
+export let createMetaNotPattern: ((pattern: NotPattern) => Pattern) | undefined;
+
+export function registerNotPatternFactory(factory: (pattern: NotPattern) => Pattern): void {
+  createMetaNotPattern = factory;
+}
+
+/**
+ * A pattern that negates another pattern; matches when the inner pattern does not match.
+ *
+ * Corresponds to the Rust `NotPattern` struct in not_pattern.rs
+ */
+export class NotPattern implements Matcher {
+  private readonly _pattern: Pattern;
+
+  private constructor(pattern: Pattern) {
+    this._pattern = pattern;
+  }
+
+  /**
+   * Creates a new NotPattern with the given pattern.
+   */
+  static new(pattern: Pattern): NotPattern {
+    return new NotPattern(pattern);
+  }
+
+  /**
+   * Gets the inner pattern.
+   */
+  pattern(): Pattern {
+    return this._pattern;
+  }
+
+  pathsWithCaptures(haystack: Envelope): [Path[], Map<string, Path[]>] {
+    // If the inner pattern doesn't match, then we return the current envelope as a match
+    const paths = !matchPattern(this._pattern, haystack) ? [[haystack]] : [];
+    return [paths, new Map<string, Path[]>()];
+  }
+
+  paths(haystack: Envelope): Path[] {
+    return this.pathsWithCaptures(haystack)[0];
+  }
+
+  matches(haystack: Envelope): boolean {
+    return this.paths(haystack).length > 0;
+  }
+
+  compile(code: Instr[], literals: Pattern[], _captures: string[]): void {
+    // NOT = check that pattern doesn't match
+    const idx = literals.length;
+    literals.push(this._pattern);
+    code.push({ type: "NotMatch", patternIndex: idx });
+  }
+
+  isComplex(): boolean {
+    return false;
+  }
+
+  toString(): string {
+    return `!${dispatchPatternToString(this._pattern)}`;
+  }
+
+  /**
+   * Equality comparison.
+   */
+  equals(other: NotPattern): boolean {
+    return this._pattern === other._pattern;
+  }
+
+  /**
+   * Hash code for use in Maps/Sets.
+   */
+  hashCode(): number {
+    return 1;
+  }
+}
