@@ -1,7 +1,7 @@
 /**
  * Annotates the mechanical `--isolatedDeclarations` cases.
  *
- *   node scripts/annotate-isolated-declarations.mjs [--dry-run]
+ *   bun scripts/annotate-isolated-declarations.ts [--dry-run]
  *
  * The reference tsconfig enables `isolatedDeclarations`, which the monorepo did
  * not. It requires an explicit type on any exported declaration whose type a
@@ -27,27 +27,28 @@ let out = "";
 try {
   out = execFileSync("bunx", ["tsc", "--noEmit"], { cwd: root, encoding: "utf8" });
 } catch (e) {
-  out = String(e.stdout ?? "");
+  out = String((e as { stdout?: unknown }).stdout ?? "");
 }
 
-const errors = [];
+const errors: { file: string; line: number; code: string }[] = [];
 for (const line of out.split("\n")) {
   const m = /^(\S+\.ts)\((\d+),(\d+)\): error (TS901[02]):/.exec(line.trim());
-  if (m) errors.push({ file: m[1], line: Number(m[2]), code: m[4] });
+  if (m) errors.push({ file: m[1] ?? "", line: Number(m[2]), code: m[4] ?? "" });
 }
 if (errors.length === 0) {
   console.log("no isolatedDeclarations errors");
   process.exit(0);
 }
 
-const byFile = new Map();
+const byFile = new Map<string, typeof errors>();
 for (const e of errors) {
-  if (!byFile.has(e.file)) byFile.set(e.file, []);
-  byFile.get(e.file).push(e);
+  const list = byFile.get(e.file);
+  if (list === undefined) byFile.set(e.file, [e]);
+  else list.push(e);
 }
 
 let fixed = 0;
-const skipped = [];
+const skipped: string[] = [];
 for (const [file, list] of byFile) {
   const path = join(root, file);
   const lines = readFileSync(path, "utf8").split("\n");
@@ -63,8 +64,8 @@ for (const [file, list] of byFile) {
         text,
       );
     if (ctor && !text.includes(": ")) {
-      const type = ctor[4].split(".").pop();
-      lines[idx] = text.replace(`${ctor[2]}${ctor[3]}`, `${ctor[2]}: ${type}${ctor[3]}`);
+      const type = (ctor[4] ?? "").split(".").pop();
+      lines[idx] = text.replace(`${ctor[2] ?? ""}${ctor[3] ?? ""}`, `${ctor[2] ?? ""}: ${type}${ctor[3] ?? ""}`);
       fixed++;
       continue;
     }
@@ -74,7 +75,7 @@ for (const [file, list] of byFile) {
 }
 
 console.log(`annotated ${fixed} declaration(s)`);
-if (skipped.length) {
+if (skipped.length > 0) {
   console.log(`\n${skipped.length} left for manual annotation:`);
-  for (const s of skipped) console.log("  " + s);
+  for (const s of skipped) console.log(`  ${s}`);
 }

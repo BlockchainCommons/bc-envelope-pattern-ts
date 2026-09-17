@@ -8,15 +8,15 @@
  * `formatPaths` byte-shape pins per Rust fixture.
  */
 
-import { tryParseDcbor } from "@blockchaincommons/dcbor-parse";
+import { tryParseDcborItem } from "@blockchaincommons/dcbor-parse";
 import { describe, it, expect } from "vitest";
 import { Envelope } from "@blockchaincommons/envelope";
 import { tryParseEnvelopePattern, paths as patternPaths } from "../src";
 import { formatPaths } from "../src/format";
 
 function envFromDcbor(src: string): Envelope {
-  const r = tryParseDcbor(src);
-  if (!r.ok) throw new Error(`parseDcbor failed: ${r.error}`);
+  const r = tryParseDcborItem(src);
+  if (!r.ok) throw new Error(`parseDcborItem failed: ${r.error}`);
   return Envelope.from(r.value as unknown as number);
 }
 

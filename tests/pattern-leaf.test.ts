@@ -10,7 +10,7 @@ import { describe, it, expect } from "vitest";
 import { Envelope } from "@blockchaincommons/envelope";
 import {
   anyBool,
-  boolean,
+  bool,
   anyNumber,
   number,
   numberRange,
@@ -24,7 +24,7 @@ import {
   anyArray,
   anyMap,
   nullValue,
-  anyTagged,
+  anyTag,
   matches,
   paths as patternPaths,
 } from "../src";
@@ -35,27 +35,27 @@ describe("Leaf Pattern Tests", () => {
     it("does not match non-boolean subjects", () => {
       const envelope = Envelope.from(42);
       expect(matches(anyBool(), envelope)).toBe(false);
-      expect(matches(boolean(true), envelope)).toBe(false);
-      expect(matches(boolean(false), envelope)).toBe(false);
+      expect(matches(bool(true), envelope)).toBe(false);
+      expect(matches(bool(false), envelope)).toBe(false);
     });
 
     it("matches bare boolean subjects", () => {
       const trueEnv = Envelope.from(true);
       expect(matches(anyBool(), trueEnv)).toBe(true);
-      expect(matches(boolean(true), trueEnv)).toBe(true);
-      expect(matches(boolean(false), trueEnv)).toBe(false);
+      expect(matches(bool(true), trueEnv)).toBe(true);
+      expect(matches(bool(false), trueEnv)).toBe(false);
 
       const falseEnv = Envelope.from(false);
       expect(matches(anyBool(), falseEnv)).toBe(true);
-      expect(matches(boolean(true), falseEnv)).toBe(false);
-      expect(matches(boolean(false), falseEnv)).toBe(true);
+      expect(matches(bool(true), falseEnv)).toBe(false);
+      expect(matches(bool(false), falseEnv)).toBe(true);
     });
 
     it("matches boolean subjects with assertions", () => {
       const envelope = Envelope.from(true).addAssertion("an", "assertion");
       expect(matches(anyBool(), envelope)).toBe(true);
-      expect(matches(boolean(true), envelope)).toBe(true);
-      expect(matches(boolean(false), envelope)).toBe(false);
+      expect(matches(bool(true), envelope)).toBe(true);
+      expect(matches(bool(false), envelope)).toBe(false);
     });
   });
 
@@ -222,7 +222,7 @@ describe("Leaf Pattern Tests", () => {
   describe("Tag Pattern", () => {
     it("does not match non-tagged subjects", () => {
       const envelope = Envelope.from("string");
-      expect(matches(anyTagged(), envelope)).toBe(false);
+      expect(matches(anyTag(), envelope)).toBe(false);
     });
 
     // Note: Tagged value matching requires creating tagged CBOR values

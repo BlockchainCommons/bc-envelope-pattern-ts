@@ -30,9 +30,14 @@ bundle) records each change as a named row. Work through the list:
       `tagged(…, *)`. `'+5'` is `'5'`; `-0.0` displays as `-0`.
 - [ ] `parseEnvelopePatternPrefix` and `tryParseEnvelopePatternPrefix` are
       gone.
-- [ ] `parseEnvelopePattern` and `tryParseEnvelopePattern` take
-      `{ maxDepth }` (500 by default) and reject deeper text with
-      `NestingTooDeep`.
+- [ ] `parseEnvelopePattern` and `tryParseEnvelopePattern` take an optional
+      `{ maxDepth }` and reject deeper text with `NestingTooDeep`; there is
+      no default limit, as in the reference.
+- [ ] Error spans follow the reference's extents, made absolute: a
+      `date'…'` error spans the body between the quotes, a `digest(…)` error
+      points just after the hex or the UR, and `[text` (an unterminated
+      array) is `ExpectedCloseBracket` at the end of the source. A
+      `date'…'` body is read as written, without trimming.
 - [ ] `ParseResult<T>` is `DcborResult<T, EnvelopePatternError>`.
 - [ ] `error.details.span` is `error.span`; `error.details` is a
       discriminated union by `code` (`kind` and `text` for `UnexpectedToken`,
@@ -51,7 +56,7 @@ bundle) records each change as a named row. Work through the list:
       `Tag`, a number, a bigint or a registered name; `knownValue` takes a
       `KnownValue`, a number, a bigint or a name; `date` takes a `CborDate`.
 - [ ] New constructors: `numberGreaterThanOrEqual`, `numberLessThanOrEqual`,
-      `numberNaN`, `byteStringRegex`, `knownValueNamed`, `knownValueRegex`,
+      `numberNaN`, `byteStringBinaryRegex`, `knownValueNamed`, `knownValueRegex`,
       `dateIso8601`, `taggedName`, `taggedRegex`, `digestBinaryRegex`,
       `arrayWithRange`, `arrayWithCount`, `mapWithRange`, `mapWithCount`,
       `nodeWithAssertionsRange`, `nodeWithAssertionsCount`, `patternEquals`.
@@ -93,10 +98,9 @@ Spans stay UTF-16 code-unit offsets.
 | `patternPaths(p, e)` / `patternMatches(p, e)` / `patternToString(p)`                                                                        | `paths(p, e)` / `matches(p, e)` / `display(p)`         |
 | `patternPathsWithCaptures(p, e)` → `[paths, captures]`                                                                                      | `pathsWithCaptures(p, e)` → `{ paths, captures }`      |
 | `and([a, b])` / `or([a, b])` / `traverse([a, b])`                                                                                           | `and(a, b)` / `or(a, b)` / `traverse(a, b)` (variadic) |
-| `notMatching(p)`                                                                                                                            | `not(p)`                                               |
 | `cborValue(v)` / `cborPattern(dcborPattern)`                                                                                                | `cbor(v)` / `cbor(dcborPattern)`                       |
 | `unwrapEnvelope()` / `unwrapMatching(p)`                                                                                                    | `unwrap()` / `unwrap(p)`                               |
-| `bool(b)` / `nullPattern()` / `anyTag()`                                                                                                    | `boolean(b)` / `nullValue()` / `anyTagged()`           |
+| `nullPattern()`                                                                                                                             | `nullValue()`                                          |
 | `patternLeaf`, `patternStructure`, `patternMeta`, `patternCompile`, `patternIsComplex`, `patternCollectCaptureNames`, `XxxPattern.new(...)` | internal                                               |
 
 Every other constructor (`text`, `textRegex`, `number…`, `date…`,

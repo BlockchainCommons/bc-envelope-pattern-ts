@@ -9,7 +9,7 @@ import {
   // Leaf patterns
   any,
   anyBool,
-  boolean,
+  bool,
   anyText,
   text,
   anyNumber,
@@ -20,7 +20,7 @@ import {
   anyKnownValue,
   anyArray,
   anyMap,
-  anyTagged, // Structure patterns
+  anyTag, // Structure patterns
   anySubject,
   anyPredicate,
   anyObject,
@@ -34,7 +34,7 @@ import {
   compressed, // Meta patterns
   and,
   or,
-  not,
+  notMatching,
   capture,
   search,
   traverse,
@@ -51,10 +51,10 @@ describe("Pattern Construction", () => {
       const anyBoolPat = anyBool();
       expect(anyBoolPat.kind).toBe("Leaf");
 
-      const truePat = boolean(true);
+      const truePat = bool(true);
       expect(truePat.kind).toBe("Leaf");
 
-      const falsePat = boolean(false);
+      const falsePat = bool(false);
       expect(falsePat.kind).toBe("Leaf");
     });
 
@@ -103,7 +103,7 @@ describe("Pattern Construction", () => {
     });
 
     it("creates tag patterns", () => {
-      const anyTagPat = anyTagged();
+      const anyTagPat = anyTag();
       expect(anyTagPat.kind).toBe("Leaf");
     });
   });
@@ -183,7 +183,7 @@ describe("Pattern Construction", () => {
     });
 
     it("creates not pattern", () => {
-      const pat = not(anyNumber());
+      const pat = notMatching(anyNumber());
       expect(pat.kind).toBe("Meta");
       if (pat.kind === "Meta") {
         expect(pat.pattern.type).toBe("Not");
@@ -223,8 +223,8 @@ describe("Pattern Display", () => {
   });
 
   it("displays bool pattern", () => {
-    expect(boolean(true).toString()).toBeDefined();
-    expect(boolean(false).toString()).toBeDefined();
+    expect(bool(true).toString()).toBeDefined();
+    expect(bool(false).toString()).toBeDefined();
   });
 
   it("displays number pattern", () => {

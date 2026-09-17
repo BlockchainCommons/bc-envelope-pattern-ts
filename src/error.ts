@@ -1,6 +1,11 @@
 /**
  * Errors: `EnvelopePatternError` for text that does not parse. Spans are
- * UTF-16 code-unit offsets into the source, always absolute.
+ * UTF-16 code-unit offsets into the source, always absolute: where the
+ * reference reports a span relative to the `date'…'`, `digest(…)`,
+ * `cbor(…)`, `tagged(…)` or `[…]` body it parsed, this library reports the
+ * same extent from the start of the source. Where the reference raises a
+ * bare `Unknown` (text it could not lex inside a construct), this library
+ * raises `UnrecognizedToken` or `InvalidPattern` with the span.
  *
  * @module error
  */
@@ -233,13 +238,13 @@ export type EnvelopePatternErrorDetails =
   | {
       /** The discriminant. */
       readonly code: "InvalidHexString";
-      /** The literal. */
+      /** The `h'…'` literal, or for `digest(…)` the point just after the hex. */
       readonly span: Span;
     }
   | {
       /** The discriminant. */
       readonly code: "InvalidDateFormat";
-      /** The literal. */
+      /** The body between the quotes of `date'…'`. */
       readonly span: Span;
     }
   | {
@@ -251,7 +256,7 @@ export type EnvelopePatternErrorDetails =
   | {
       /** The discriminant. */
       readonly code: "InvalidUr";
-      /** The literal. */
+      /** The point just after the UR in `digest(…)`. */
       readonly span: Span;
       /** The UR decoder's reason. */
       readonly cause: string;
@@ -309,7 +314,7 @@ export type EnvelopePatternErrorDetails =
   | {
       /** The discriminant. */
       readonly code: "InvalidPattern";
-      /** The body. */
+      /** The dCBOR pattern body, or the rest of the text an array pattern consumed. */
       readonly span: Span;
     }
   | {

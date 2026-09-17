@@ -101,7 +101,7 @@ const TOMBSTONES: {
     // number display at `cbor(/…/)` leaves and in dcbor value forms.
     id: "inherited-dcbor-pattern",
     landed: true,
-    rows: 2933,
+    rows: 3437,
     matches: (r) =>
       /cbor\(\/|\/[^/]*\/|h'|\d{16,}|\[.*\]|date'|'[^']*'|\d[eE][+-]?\d|\.\d{5,}|tagged\(\+\d|^[<>]=?\s*\d|\d\.\.\.\d|\s$|\b(array|map)\b/.test(
         pattern(r),
@@ -195,7 +195,7 @@ const TOMBSTONES: {
     // lexes the longest keyword instead of an identifier.
     id: "lexer-errors",
     landed: true,
-    rows: 4133,
+    rows: 4056,
     matches: (_r, a, b) => a !== b && (a.startsWith("throw") || b.startsWith("throw")),
   },
 ];

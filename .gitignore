@@ -37,8 +37,13 @@ bench/charts/*.html
 # Rust cross-validation harness build artifacts
 tests/rust-validation/target
 
-# Lockfile: intentionally absent until every @blockchaincommons dependency is
-# published. Local verification installs siblings through the workspace link,
-# which would bake unpublishable paths into bun.lock. A real lockfile is
-# committed at the first release.
+# Lockfile: intentionally absent until @blockchaincommons/dcbor-pattern
+# publishes the surface this package uses (`bool`, `notMatching`,
+# `parsePatternPartial`, `tryParsePatternPartial`, `PatternPartial`). Every
+# other dependency is on npm, but the registry still serves dcbor-pattern
+# 1.0.0-beta.1 without those, so a lockfile resolved from the registry gives
+# a red CI; a local install resolves that dependency through the workspace
+# link, which would bake an unpublishable path into the lockfile. Once
+# dcbor-pattern publishes, raise its range here, commit a real lockfile and
+# switch the workflows to `bun install --frozen-lockfile`.
 bun.lock

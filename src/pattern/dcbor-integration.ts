@@ -7,7 +7,7 @@
  */
 import type { Pattern as DcborPattern } from "@blockchaincommons/dcbor-pattern";
 import { type Pattern, leafPattern } from "./types";
-import { and, any, cborPattern, not, or } from "./constructors";
+import { and, any, cborPattern, notMatching, or } from "./constructors";
 
 /** The envelope pattern a dCBOR pattern parses to when the envelope grammar rejects the text. */
 export const convertDcborPatternToEnvelopePattern = (pattern: DcborPattern): Pattern => {
@@ -56,7 +56,7 @@ export const convertDcborPatternToEnvelopePattern = (pattern: DcborPattern): Pat
         case "Or":
           return or(...m.pattern.patterns.map(convertDcborPatternToEnvelopePattern));
         case "Not":
-          return not(convertDcborPatternToEnvelopePattern(m.pattern.pattern));
+          return notMatching(convertDcborPatternToEnvelopePattern(m.pattern.pattern));
         case "Capture":
         case "Repeat":
         case "Search":

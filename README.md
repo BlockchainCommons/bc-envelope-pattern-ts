@@ -119,8 +119,10 @@ Spans are UTF-16 code-unit offsets into the source. A wrong argument type
 non-string source) is a `TypeError`; a wrong value (`number(NaN)`, an
 inverted range, a capture name that is not an identifier, a digest prefix
 over 32 bytes, a `maxDepth` that is not a positive integer) is a
-`RangeError`. Nesting is limited to 500 levels by default
-(`ParseOptions.maxDepth`); deeper text is rejected with `NestingTooDeep`.
+`RangeError`. Nesting is not limited by default, as in the reference: text
+nested a few thousand levels deep exhausts the engine's stack with a
+`RangeError`. `ParseOptions.maxDepth` sets a limit when one is wanted;
+deeper text is then rejected with `NestingTooDeep`.
 
 ### Entries
 

@@ -8,7 +8,7 @@
  * empty matches, and that path order is preserved.
  */
 
-import { tryParseDcbor } from "@blockchaincommons/dcbor-parse";
+import { tryParseDcborItem } from "@blockchaincommons/dcbor-parse";
 import { describe, it, expect } from "vitest";
 import { Envelope } from "@blockchaincommons/envelope";
 import { tryParseEnvelopePattern, paths as patternPaths } from "../src";
@@ -34,7 +34,7 @@ describe("cbor pattern formatted paths (test_cbor_paths_formatted.rs)", () => {
   });
 
   it("nested structure paths — 4 numbers found", () => {
-    const parsed = tryParseDcbor('{"scores": [95, 87, 92], "value": 42}');
+    const parsed = tryParseDcborItem('{"scores": [95, 87, 92], "value": 42}');
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);
@@ -65,7 +65,7 @@ describe("cbor pattern formatted paths (test_cbor_paths_formatted.rs)", () => {
   });
 
   it("text-search paths — finds 6 text values incl. map keys", () => {
-    const parsed = tryParseDcbor('{"name": "Alice", "items": ["apple", "banana"], "count": 2}');
+    const parsed = tryParseDcborItem('{"name": "Alice", "items": ["apple", "banana"], "count": 2}');
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);
@@ -96,7 +96,7 @@ describe("cbor pattern formatted paths (test_cbor_paths_formatted.rs)", () => {
   });
 
   it("paths preserve order — [10, 20, 30]", () => {
-    const parsed = tryParseDcbor("[10, 20, 30]");
+    const parsed = tryParseDcborItem("[10, 20, 30]");
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);
@@ -125,7 +125,7 @@ describe("cbor pattern formatted paths (test_cbor_paths_formatted.rs)", () => {
   });
 
   it("complex nested paths — 3 numbers found", () => {
-    const parsed = tryParseDcbor(
+    const parsed = tryParseDcborItem(
       `{"users": [{"name": "Alice", "age": 30}, {"name": "Bob", "age": 25}], "total": 2}`,
     );
     expect(parsed.ok).toBe(true);

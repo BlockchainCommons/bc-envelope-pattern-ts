@@ -4,7 +4,7 @@
  * Port of `bc-envelope-pattern-rust/tests/test_dcbor_paths.rs`.
  */
 
-import { tryParseDcbor } from "@blockchaincommons/dcbor-parse";
+import { tryParseDcborItem } from "@blockchaincommons/dcbor-parse";
 import { describe, it, expect } from "vitest";
 import { Envelope } from "@blockchaincommons/envelope";
 import { tryParseEnvelopePattern, paths as patternPaths } from "../src";
@@ -12,7 +12,7 @@ import { formatPaths } from "../src/format";
 
 describe("cbor pattern dcbor paths (test_dcbor_paths.rs)", () => {
   it("returns extended paths for all numbers in nested map+array", () => {
-    const parsed = tryParseDcbor('{"numbers": [1, 2, 3], "nested": {"value": 42}}');
+    const parsed = tryParseDcborItem('{"numbers": [1, 2, 3], "nested": {"value": 42}}');
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);
@@ -53,7 +53,7 @@ describe("cbor pattern dcbor paths (test_dcbor_paths.rs)", () => {
   });
 
   it('`cbor(/search(text)/)` finds "hello" in [1, "hello", true]', () => {
-    const parsed = tryParseDcbor('[1, "hello", true]');
+    const parsed = tryParseDcborItem('[1, "hello", true]');
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);
@@ -69,7 +69,7 @@ describe("cbor pattern dcbor paths (test_dcbor_paths.rs)", () => {
   });
 
   it("`cbor(/search(number)/)` returns 3 paths for [1, 2, 3]", () => {
-    const parsed = tryParseDcbor("[1, 2, 3]");
+    const parsed = tryParseDcborItem("[1, 2, 3]");
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);
@@ -92,7 +92,7 @@ describe("cbor pattern dcbor paths (test_dcbor_paths.rs)", () => {
   });
 
   it("multiple paths for `{numbers: [1,2,3], value: 42}`", () => {
-    const parsed = tryParseDcbor('{"numbers": [1, 2, 3], "value": 42}');
+    const parsed = tryParseDcborItem('{"numbers": [1, 2, 3], "value": 42}');
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);

@@ -25,7 +25,7 @@ const convertDcborPatternToEnvelopePattern = (
     return { ok: false, error: e as Error };
   }
 };
-import { boolean as bool } from "@blockchaincommons/dcbor-pattern";
+import { bool } from "@blockchaincommons/dcbor-pattern";
 
 describe("Parser Integration Tests", () => {
   describe("Envelope Patterns Take Precedence", () => {

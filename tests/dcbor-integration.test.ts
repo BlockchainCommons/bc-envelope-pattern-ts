@@ -9,7 +9,7 @@
 
 import { describe, it, expect } from "vitest";
 import { Envelope } from "@blockchaincommons/envelope";
-import { tryParseDcborPrefix } from "@blockchaincommons/dcbor-parse";
+import { tryParseDcborItemPartial } from "@blockchaincommons/dcbor-parse";
 import { type Pattern as _Pattern, matches } from "../src";
 import { convertDcborPatternToEnvelopePattern as convert } from "../src/pattern/dcbor-integration";
 import type { Pattern as DcborPattern } from "@blockchaincommons/dcbor-pattern";
@@ -25,7 +25,7 @@ const convertDcborPatternToEnvelopePattern = (
     return { ok: false, error: e as Error };
   }
 };
-import { boolean as dcborBool } from "@blockchaincommons/dcbor-pattern";
+import { bool as dcborBool } from "@blockchaincommons/dcbor-pattern";
 import {
   anyBool as dcborAnyBool,
   anyNumber as dcborAnyNumber,
@@ -44,7 +44,7 @@ import {
  * Helper function to create an envelope from CBOR diagnostic notation.
  */
 function envelopeFromCbor(diagnostic: string): Envelope {
-  const result = tryParseDcborPrefix(diagnostic);
+  const result = tryParseDcborItemPartial(diagnostic);
   if (!result.ok) {
     throw new Error(`Failed to parse CBOR: ${diagnostic}`);
   }

@@ -74,7 +74,7 @@ export const anyPredicate: () => Pattern;
 export const anySubject: () => Pattern;
 
 // @public
-export const anyTagged: () => Pattern;
+export const anyTag: () => Pattern;
 
 // @public
 export const anyText: () => Pattern;
@@ -103,13 +103,13 @@ export const assertionWithObject: (pattern: Pattern) => Pattern;
 export const assertionWithPredicate: (pattern: Pattern) => Pattern;
 
 // @public
-export const boolean: (value: boolean) => Pattern;
+export const bool: (value: boolean) => Pattern;
 
 // @public
 export const byteString: (value: Uint8Array) => Pattern;
 
 // @public
-export const byteStringRegex: (regex: RegexInput) => Pattern;
+export const byteStringBinaryRegex: (regex: RegexInput) => Pattern;
 
 // @public
 export const capture: (name: string, pattern: Pattern) => Pattern;
@@ -444,7 +444,7 @@ export const nodeWithAssertionsCount: (count: number) => Pattern;
 export const nodeWithAssertionsRange: (min: number, max?: number) => Pattern;
 
 // @public
-export const not: (pattern: Pattern) => Pattern;
+export const notMatching: (pattern: Pattern) => Pattern;
 
 // @public
 export const nullValue: () => Pattern;

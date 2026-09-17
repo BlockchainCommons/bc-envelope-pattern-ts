@@ -78,7 +78,7 @@ export function cbor(valueOrPattern: CborInput | DcborPattern): Pattern {
 export const anyBool = (): Pattern => leafPattern({ type: "Bool", pattern: D.boolPatternAny() });
 
 /** `true` / `false`: matches that boolean subject. */
-export const boolean = (value: boolean): Pattern => {
+export const bool = (value: boolean): Pattern => {
   if (typeof value !== "boolean") throw new TypeError("value must be a boolean");
   return leafPattern({ type: "Bool", pattern: D.boolPatternValue(value) });
 };
@@ -200,7 +200,7 @@ export const byteString = (value: Uint8Array): Pattern =>
   });
 
 /** `h'/regex/'`: matches a byte-string subject the byte regex matches. */
-export const byteStringRegex = (regex: RegexInput): Pattern =>
+export const byteStringBinaryRegex = (regex: RegexInput): Pattern =>
   leafPattern({ type: "ByteString", pattern: D.byteStringPatternBinaryRegex(regex) });
 
 /** `known`: matches any known-value subject. */
@@ -278,8 +278,7 @@ export const mapWithCount = (count: number): Pattern =>
 export const nullValue = (): Pattern => leafPattern({ type: "Null", pattern: D.nullPattern() });
 
 /** `tagged`: matches any tagged subject. */
-export const anyTagged = (): Pattern =>
-  leafPattern({ type: "Tagged", pattern: D.taggedPatternAny() });
+export const anyTag = (): Pattern => leafPattern({ type: "Tagged", pattern: D.taggedPatternAny() });
 
 const isTag = (value: unknown): value is Tag =>
   typeof value === "object" &&
@@ -498,12 +497,12 @@ export const or = (...patterns: Pattern[]): Pattern => {
 };
 
 /** `!p`: matches when `pattern` does not. */
-export const not = (pattern: Pattern): Pattern =>
+export const notMatching = (pattern: Pattern): Pattern =>
   metaPattern({ type: "Not", pattern: requirePattern(pattern) });
 
 /** `a -> b -> …`: each pattern matched from where the previous one ended; no pattern is `!*`. */
 export const traverse = (...patterns: Pattern[]): Pattern => {
-  if (patterns.length === 0) return not(any());
+  if (patterns.length === 0) return notMatching(any());
   return metaPattern({
     type: "Traverse",
     patterns: Object.freeze(requirePatterns(patterns, "traverse")),

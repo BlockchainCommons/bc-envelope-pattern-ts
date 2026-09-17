@@ -1,5 +1,5 @@
 {
- "count": 14501,
+ "count": 14502,
  "vectors": [
   {
    "name": "parse \"\"",
@@ -1431,7 +1431,7 @@
     "k": "parse",
     "src": "["
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "parse \"[*]\"",
@@ -2167,7 +2167,7 @@
     "k": "parse",
     "src": "date'/'"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "parse \"date'/2023-.*/'\"",
@@ -2183,7 +2183,7 @@
     "k": "parse",
     "src": "date'/[/'"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "parse \"date'1969-12-31T23:59:59.5Z'\"",
@@ -2247,7 +2247,7 @@
     "k": "parse",
     "src": "date'a...b...c'"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "parse \"date'bogus'\"",
@@ -2255,7 +2255,7 @@
     "k": "parse",
     "src": "date'bogus'"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "parse \"date(2023-06-15)\"",
@@ -2319,7 +2319,7 @@
     "k": "parse",
     "src": "digest(abc)"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "parse \"digest(abcd ef)\"",
@@ -2335,7 +2335,7 @@
     "k": "parse",
     "src": "digest(ur:digest/bad)"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "parse \"elided\"",
@@ -3639,7 +3639,7 @@
     "k": "parse",
     "src": "text | date'bogus'"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "parse \"text | text\"",
@@ -24419,7 +24419,7 @@
     "pattern": "/\\w+/",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "paths=[]"
+   "expect": "paths=[701813d6d5ac9e087e4b469881bd4bf116fee5027a3b7ea436d513b0d8049737]"
   },
   {
    "name": "match \"/\\\\w+/\" on d8c8d8c91b100000",
@@ -39260,7 +39260,7 @@
     "pattern": "[",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c962c3a9",
@@ -39269,7 +39269,7 @@
     "pattern": "[",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c91b100000",
@@ -39278,7 +39278,7 @@
     "pattern": "[",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c9c11a648a",
@@ -39287,7 +39287,7 @@
     "pattern": "[",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c801",
@@ -39296,7 +39296,7 @@
     "pattern": "[",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c983010101",
@@ -39305,7 +39305,7 @@
     "pattern": "[",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c982018202",
@@ -39314,7 +39314,7 @@
     "pattern": "[",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c982d99c40",
@@ -39323,7 +39323,7 @@
     "pattern": "[",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c9a1616182",
@@ -39332,7 +39332,7 @@
     "pattern": "[",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c9a101d99c",
@@ -39341,7 +39341,7 @@
     "pattern": "[",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c9d8646674",
@@ -39350,7 +39350,7 @@
     "pattern": "[",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c9d8648261",
@@ -39359,7 +39359,7 @@
     "pattern": "[",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c883d8c965416c",
@@ -39368,7 +39368,7 @@
     "pattern": "[",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c883d8c964726f",
@@ -39377,7 +39377,7 @@
     "pattern": "[",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c88201a1d8c964",
@@ -39386,7 +39386,7 @@
     "pattern": "[",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c88200a110d8c9",
@@ -39395,7 +39395,7 @@
     "pattern": "[",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c88ed8c9646d61",
@@ -39404,7 +39404,7 @@
     "pattern": "[",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8d8c883d8c965",
@@ -39413,7 +39413,7 @@
     "pattern": "[",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c8a1d8c9656b6e",
@@ -39422,7 +39422,7 @@
     "pattern": "[",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c883d8c965416c",
@@ -39431,7 +39431,7 @@
     "pattern": "[",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c883d99c42844a",
@@ -39440,7 +39440,7 @@
     "pattern": "[",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[\" on d8c883d8c88ed8c9",
@@ -39449,7 +39449,7 @@
     "pattern": "[",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidPattern@1-1"
+   "expect": "throw:ExpectedCloseBracket@1-1"
   },
   {
    "name": "match \"[*]\" on d8c8d8c96548656c",
@@ -57476,7 +57476,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c962c3a9",
@@ -57485,7 +57485,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c91b100000",
@@ -57494,7 +57494,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c9c11a648a",
@@ -57503,7 +57503,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c801",
@@ -57512,7 +57512,7 @@
     "pattern": "date'/'",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c983010101",
@@ -57521,7 +57521,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c982018202",
@@ -57530,7 +57530,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c982d99c40",
@@ -57539,7 +57539,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c9a1616182",
@@ -57548,7 +57548,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c9a101d99c",
@@ -57557,7 +57557,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c9d8646674",
@@ -57566,7 +57566,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c9d8648261",
@@ -57575,7 +57575,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c883d8c965416c",
@@ -57584,7 +57584,7 @@
     "pattern": "date'/'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c883d8c964726f",
@@ -57593,7 +57593,7 @@
     "pattern": "date'/'",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c88201a1d8c964",
@@ -57602,7 +57602,7 @@
     "pattern": "date'/'",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c88200a110d8c9",
@@ -57611,7 +57611,7 @@
     "pattern": "date'/'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c88ed8c9646d61",
@@ -57620,7 +57620,7 @@
     "pattern": "date'/'",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8d8c883d8c965",
@@ -57629,7 +57629,7 @@
     "pattern": "date'/'",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c8a1d8c9656b6e",
@@ -57638,7 +57638,7 @@
     "pattern": "date'/'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c883d8c965416c",
@@ -57647,7 +57647,7 @@
     "pattern": "date'/'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c883d99c42844a",
@@ -57656,7 +57656,7 @@
     "pattern": "date'/'",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/'\" on d8c883d8c88ed8c9",
@@ -57665,7 +57665,7 @@
     "pattern": "date'/'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidDateFormat@0-7"
+   "expect": "throw:InvalidDateFormat@5-6"
   },
   {
    "name": "match \"date'/2023-.*/'\" on d8c8d8c96548656c",
@@ -57872,7 +57872,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c962c3a9",
@@ -57881,7 +57881,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c91b100000",
@@ -57890,7 +57890,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c9c11a648a",
@@ -57899,7 +57899,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c801",
@@ -57908,7 +57908,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c983010101",
@@ -57917,7 +57917,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c982018202",
@@ -57926,7 +57926,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c982d99c40",
@@ -57935,7 +57935,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c9a1616182",
@@ -57944,7 +57944,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c9a101d99c",
@@ -57953,7 +57953,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c9d8646674",
@@ -57962,7 +57962,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c9d8648261",
@@ -57971,7 +57971,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c883d8c965416c",
@@ -57980,7 +57980,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c883d8c964726f",
@@ -57989,7 +57989,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c88201a1d8c964",
@@ -57998,7 +57998,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c88200a110d8c9",
@@ -58007,7 +58007,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c88ed8c9646d61",
@@ -58016,7 +58016,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8d8c883d8c965",
@@ -58025,7 +58025,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c8a1d8c9656b6e",
@@ -58034,7 +58034,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c883d8c965416c",
@@ -58043,7 +58043,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c883d99c42844a",
@@ -58052,7 +58052,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'/[/'\" on d8c883d8c88ed8c9",
@@ -58061,7 +58061,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "match \"date'1969-12-31T23:59:59.5Z'\" on d8c8d8c96548656c",
@@ -59456,7 +59456,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c962c3a9",
@@ -59465,7 +59465,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c91b100000",
@@ -59474,7 +59474,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c9c11a648a",
@@ -59483,7 +59483,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c801",
@@ -59492,7 +59492,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c983010101",
@@ -59501,7 +59501,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c982018202",
@@ -59510,7 +59510,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c982d99c40",
@@ -59519,7 +59519,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c9a1616182",
@@ -59528,7 +59528,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c9a101d99c",
@@ -59537,7 +59537,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c9d8646674",
@@ -59546,7 +59546,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c9d8648261",
@@ -59555,7 +59555,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c883d8c965416c",
@@ -59564,7 +59564,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c883d8c964726f",
@@ -59573,7 +59573,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c88201a1d8c964",
@@ -59582,7 +59582,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c88200a110d8c9",
@@ -59591,7 +59591,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c88ed8c9646d61",
@@ -59600,7 +59600,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8d8c883d8c965",
@@ -59609,7 +59609,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c8a1d8c9656b6e",
@@ -59618,7 +59618,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c883d8c965416c",
@@ -59627,7 +59627,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c883d99c42844a",
@@ -59636,7 +59636,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'a...b...c'\" on d8c883d8c88ed8c9",
@@ -59645,7 +59645,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c96548656c",
@@ -59654,7 +59654,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c962c3a9",
@@ -59663,7 +59663,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c91b100000",
@@ -59672,7 +59672,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c9c11a648a",
@@ -59681,7 +59681,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c801",
@@ -59690,7 +59690,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c983010101",
@@ -59699,7 +59699,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c982018202",
@@ -59708,7 +59708,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c982d99c40",
@@ -59717,7 +59717,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c9a1616182",
@@ -59726,7 +59726,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c9a101d99c",
@@ -59735,7 +59735,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c9d8646674",
@@ -59744,7 +59744,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c9d8648261",
@@ -59753,7 +59753,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c883d8c965416c",
@@ -59762,7 +59762,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c883d8c964726f",
@@ -59771,7 +59771,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c88201a1d8c964",
@@ -59780,7 +59780,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c88200a110d8c9",
@@ -59789,7 +59789,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c88ed8c9646d61",
@@ -59798,7 +59798,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8d8c883d8c965",
@@ -59807,7 +59807,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c8a1d8c9656b6e",
@@ -59816,7 +59816,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c883d8c965416c",
@@ -59825,7 +59825,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c883d99c42844a",
@@ -59834,7 +59834,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date'bogus'\" on d8c883d8c88ed8c9",
@@ -59843,7 +59843,7 @@
     "pattern": "date'bogus'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidDateFormat@0-11"
+   "expect": "throw:InvalidDateFormat@5-10"
   },
   {
    "name": "match \"date(2023-06-15)\" on d8c8d8c96548656c",
@@ -61238,7 +61238,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c962c3a9",
@@ -61247,7 +61247,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c91b100000",
@@ -61256,7 +61256,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c9c11a648a",
@@ -61265,7 +61265,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c801",
@@ -61274,7 +61274,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c983010101",
@@ -61283,7 +61283,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c982018202",
@@ -61292,7 +61292,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c982d99c40",
@@ -61301,7 +61301,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c9a1616182",
@@ -61310,7 +61310,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c9a101d99c",
@@ -61319,7 +61319,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c9d8646674",
@@ -61328,7 +61328,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c9d8648261",
@@ -61337,7 +61337,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c883d8c965416c",
@@ -61346,7 +61346,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c883d8c964726f",
@@ -61355,7 +61355,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c88201a1d8c964",
@@ -61364,7 +61364,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c88200a110d8c9",
@@ -61373,7 +61373,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c88ed8c9646d61",
@@ -61382,7 +61382,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8d8c883d8c965",
@@ -61391,7 +61391,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c8a1d8c9656b6e",
@@ -61400,7 +61400,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c883d8c965416c",
@@ -61409,7 +61409,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c883d99c42844a",
@@ -61418,7 +61418,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abc)\" on d8c883d8c88ed8c9",
@@ -61427,7 +61427,7 @@
     "pattern": "digest(abc)",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidHexString@7-10"
+   "expect": "throw:InvalidHexString@10-10"
   },
   {
    "name": "match \"digest(abcd ef)\" on d8c8d8c96548656c",
@@ -61634,7 +61634,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c962c3a9",
@@ -61643,7 +61643,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c91b100000",
@@ -61652,7 +61652,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c9c11a648a",
@@ -61661,7 +61661,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c801",
@@ -61670,7 +61670,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c983010101",
@@ -61679,7 +61679,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c982018202",
@@ -61688,7 +61688,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c982d99c40",
@@ -61697,7 +61697,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c9a1616182",
@@ -61706,7 +61706,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c9a101d99c",
@@ -61715,7 +61715,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c9d8646674",
@@ -61724,7 +61724,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c9d8648261",
@@ -61733,7 +61733,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c883d8c965416c",
@@ -61742,7 +61742,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c883d8c964726f",
@@ -61751,7 +61751,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c88201a1d8c964",
@@ -61760,7 +61760,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c88200a110d8c9",
@@ -61769,7 +61769,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c88ed8c9646d61",
@@ -61778,7 +61778,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8d8c883d8c965",
@@ -61787,7 +61787,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c8a1d8c9656b6e",
@@ -61796,7 +61796,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c883d8c965416c",
@@ -61805,7 +61805,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c883d99c42844a",
@@ -61814,7 +61814,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"digest(ur:digest/bad)\" on d8c883d8c88ed8c9",
@@ -61823,7 +61823,7 @@
     "pattern": "digest(ur:digest/bad)",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidUr@7-20"
+   "expect": "throw:InvalidUr@20-20"
   },
   {
    "name": "match \"elided\" on d8c8d8c96548656c",
@@ -93908,7 +93908,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c962c3a9",
@@ -93917,7 +93917,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c962c3a9"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c91b100000",
@@ -93926,7 +93926,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c91b1000000000000000"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c9c11a648a",
@@ -93935,7 +93935,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c801",
@@ -93944,7 +93944,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c801"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c983010101",
@@ -93953,7 +93953,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c983010101"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c982018202",
@@ -93962,7 +93962,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c982d99c40",
@@ -93971,7 +93971,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c982d99c400102"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c9a1616182",
@@ -93980,7 +93980,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c9a161618201a1616202"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c9a101d99c",
@@ -93989,7 +93989,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c9d8646674",
@@ -93998,7 +93998,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c9d86466746167676564"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c9d8648261",
@@ -94007,7 +94007,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c9d8648261616162"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c883d8c965416c",
@@ -94016,7 +94016,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c883d8c964726f",
@@ -94025,7 +94025,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c88201a1d8c964",
@@ -94034,7 +94034,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c88200a110d8c9",
@@ -94043,7 +94043,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c88ed8c9646d61",
@@ -94052,7 +94052,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c88ed8c9646d616e79a1d8c9627032d8c902a1d8c9627036d8c906a1d8c9627034d8c904a1d8c9627035d8c905a1d8c9627037d8c907a1d8c9627031d8c901a1d8c963703133d8c90da1d8c963703131d8c90ba1d8c963703132d8c90ca1d8c9627039d8c909a1d8c963703130d8c90aa1d8c9627038d8c908a1d8c9627033d8c903"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8d8c883d8c965",
@@ -94061,7 +94061,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c8a1d8c9656b6e",
@@ -94070,7 +94070,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c883d8c965416c",
@@ -94079,7 +94079,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6c582078d666eb8f4c0977a0425ab6aa21ea16934a6bc97c6f0c3abaefac951c1714a2"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c883d99c42844a",
@@ -94088,7 +94088,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c883d99c42844a06f3c7a09125da1566054c07070707070707070707070750fa41d5421caaa75e4341fc5ab30f55155825d99c41582013941b487c1ddebce827b6ec3f46d982938acdc7e3b6a140db36062d9519dd2fa1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | date'bogus'\" on d8c883d8c88ed8c9",
@@ -94097,7 +94097,7 @@
     "pattern": "text | date'bogus'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidDateFormat@7-18"
+   "expect": "throw:InvalidDateFormat@12-17"
   },
   {
    "name": "match \"text | text\" on d8c8d8c96548656c",
@@ -108110,7 +108110,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c8d8c9c11a648a",
@@ -108119,7 +108119,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c8d8c982018202",
@@ -108128,7 +108128,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c8d8c9a101d99c",
@@ -108137,7 +108137,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c883d8c965416c",
@@ -108146,7 +108146,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c88200a110d8c9",
@@ -108155,7 +108155,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c8a1d8c9656b6e",
@@ -108164,7 +108164,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'/[/'\" on d8c883d8c88ed8c9",
@@ -108173,7 +108173,7 @@
     "pattern": "date'/[/'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidRegex@0-9"
+   "expect": "throw:InvalidRegex@5-8"
   },
   {
    "name": "matches \"date'2023-06-15T12:30:00Z'\" on d8c8d8c96548656c",
@@ -108254,7 +108254,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c96548656c6c6f"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c8d8c9c11a648a",
@@ -108263,7 +108263,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9c11a648a5480"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c8d8c982018202",
@@ -108272,7 +108272,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9820182028203666e6565646c65"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c8d8c9a101d99c",
@@ -108281,7 +108281,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8d8c9a101d99c4001"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c883d8c965416c",
@@ -108290,7 +108290,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d8c965416c696365a1d8c9656b6e6f7773d8c9654361726f6ca1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c88200a110d8c9",
@@ -108299,7 +108299,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c88200a110d8c9c11a648b0448"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c8a1d8c9656b6e",
@@ -108308,7 +108308,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c8a1d8c9656b6e6f7773d8c963426f62"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"date'a...b...c'\" on d8c883d8c88ed8c9",
@@ -108317,7 +108317,7 @@
     "pattern": "date'a...b...c'",
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264"
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "matches \"digest ( a1b2c3 )\" on d8c8d8c96548656c",
@@ -120807,7 +120807,7 @@
     "hex": "d8c883d8c964726f6f74a101d8c9655468696e67a1d8c9656368696c6482d8c9646c656166a1d8c96a6772616e646368696c64d8c9182a",
     "opts": {}
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c964726f {\"indent\":false}",
@@ -120819,7 +120819,7 @@
      "indent": false
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c964726f {\"lastElementOnly\":true}",
@@ -120831,7 +120831,7 @@
      "lastElementOnly": true
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c964726f {\"maxLength\":12}",
@@ -120843,7 +120843,7 @@
      "maxLength": 12
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c964726f {\"element\":\"digestUR\"}",
@@ -120855,7 +120855,7 @@
      "element": "digestUR"
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c964726f {\"element\":\"envelopeUR\",\"lastElementOnly\":true}",
@@ -120868,7 +120868,7 @@
      "lastElementOnly": true
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c88201a1d8c964 {}",
@@ -120878,7 +120878,7 @@
     "hex": "d8c88201a1d8c9646e6f7465d8c9616e",
     "opts": {}
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c88201a1d8c964 {\"indent\":false}",
@@ -120890,7 +120890,7 @@
      "indent": false
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c88201a1d8c964 {\"lastElementOnly\":true}",
@@ -120902,7 +120902,7 @@
      "lastElementOnly": true
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c88201a1d8c964 {\"maxLength\":12}",
@@ -120914,7 +120914,7 @@
      "maxLength": 12
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c88201a1d8c964 {\"element\":\"digestUR\"}",
@@ -120926,7 +120926,7 @@
      "element": "digestUR"
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c88201a1d8c964 {\"element\":\"envelopeUR\",\"lastElementOnly\":true}",
@@ -120939,7 +120939,7 @@
      "lastElementOnly": true
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c88ed8c9 {}",
@@ -120949,7 +120949,7 @@
     "hex": "d8c883d8c88ed8c9d99c4c58204676635a6e6068c2ef3ffd8ff726dd401fd341036e920f136a1d8af5e829496da1d8c97163657274696669636174654e756d626572d8c96b3132332d3435362d373839a1d8c96e65787069726174696f6e44617465d8c9c11a6d182000a1d8c9686c6173744e616d65d8c9674d617877656c6ca1d8c969697373756544617465d8c9c11a5e0be100a101d8c978194365727469666963617465206f6620436f6d706c6574696f6ea1d8c96570686f746fd8c9781e54686973206973204a616d6573204d617877656c6c27732070686f746f2ea1d8c9781c70726f66657373696f6e616c446576656c6f706d656e74486f757273d8c90fa1d8c96966697273744e616d65d8c9654a616d6573a1d8c966746f70696373d8c982695375626a6563742031695375626a6563742032a1d8c97818636f6e74696e75696e67456475636174696f6e556e697473d8c901a107d8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a1d8c9677375626a656374d8c9781c524620616e64204d6963726f7761766520456e67696e656572696e67a10dd8c978244578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264a103d8c9d99c5458401c13ff1fb5cb761e0caf7e484d47c3fdae76fa7f597c8d0965b47328cf26a886cbb7da02fbbb5bca39a130a26bdca0a068e9d3496736229a21d2b584efbb8cd1a104d8c9782e5369676e6564206279204578616d706c6520456c656374726963616c20456e67696e656572696e6720426f617264",
     "opts": {}
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c88ed8c9 {\"indent\":false}",
@@ -120961,7 +120961,7 @@
      "indent": false
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c88ed8c9 {\"lastElementOnly\":true}",
@@ -120973,7 +120973,7 @@
      "lastElementOnly": true
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c88ed8c9 {\"maxLength\":12}",
@@ -120985,7 +120985,7 @@
      "maxLength": 12
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c88ed8c9 {\"element\":\"digestUR\"}",
@@ -120997,7 +120997,7 @@
      "element": "digestUR"
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"date'a...b...c'\" on d8c883d8c88ed8c9 {\"element\":\"envelopeUR\",\"lastElementOnly\":true}",
@@ -121010,7 +121010,7 @@
      "lastElementOnly": true
     }
    },
-   "expect": "throw:InvalidDateFormat@0-15"
+   "expect": "throw:InvalidDateFormat@5-14"
   },
   {
    "name": "format \"digest(a1b2c3)\" on d8c883d8c964726f {}",
@@ -132853,7 +132853,7 @@
     "k": "domain",
     "name": "nest-501-parens"
    },
-   "expect": "throw:NestingTooDeep@500-501"
+   "expect": "1"
   },
   {
    "name": "domain nest-501-search",
@@ -132861,7 +132861,7 @@
     "k": "domain",
     "name": "nest-501-search"
    },
-   "expect": "throw:NestingTooDeep@3500-3506"
+   "expect": "4009"
   },
   {
    "name": "domain nest-501-not",
@@ -132869,7 +132869,15 @@
     "k": "domain",
     "name": "nest-501-not"
    },
-   "expect": "throw:NestingTooDeep@500-501"
+   "expect": "502"
+  },
+  {
+   "name": "domain nest-1000-parens",
+   "recipe": {
+    "k": "domain",
+    "name": "nest-1000-parens"
+   },
+   "expect": "1"
   },
   {
    "name": "domain max-depth-option",
@@ -132901,7 +132909,7 @@
     "k": "domain",
     "name": "error-message"
    },
-   "expect": "Invalid pattern"
+   "expect": "Expected closing bracket"
   },
   {
    "name": "domain error-full-message",
@@ -132989,7 +132997,7 @@
     "k": "domain",
     "name": "exports"
    },
-   "expect": "EnvelopePatternError,EnvelopePatternErrorCode,Interval,Quantifier,Reluctance,and,any,anyArray,anyAssertion,anyBool,anyByteString,anyCbor,anyDate,anyKnownValue,anyMap,anyNode,anyNumber,anyObject,anyPredicate,anySubject,anyTagged,anyText,arrayWithCount,arrayWithRange,assertionWithObject,assertionWithPredicate,boolean,byteString,byteStringRegex,capture,cbor,compressed,date,dateEarliest,dateIso8601,dateLatest,dateRange,dateRegex,digest,digestBinaryRegex,digestPrefix,display,elided,encrypted,group,knownValue,knownValueNamed,knownValueRegex,leaf,mapWithCount,mapWithRange,matches,nodeWithAssertionsCount,nodeWithAssertionsRange,not,nullValue,number,numberGreaterThan,numberGreaterThanOrEqual,numberLessThan,numberLessThanOrEqual,numberNaN,numberRange,object,obscured,or,parseEnvelopePattern,paths,pathsWithCaptures,patternEquals,predicate,repeat,search,span,subject,tagged,taggedName,taggedRegex,text,textRegex,traverse,tryParseEnvelopePattern,unit,unwrap,wrapped"
+   "expect": "EnvelopePatternError,EnvelopePatternErrorCode,Interval,Quantifier,Reluctance,and,any,anyArray,anyAssertion,anyBool,anyByteString,anyCbor,anyDate,anyKnownValue,anyMap,anyNode,anyNumber,anyObject,anyPredicate,anySubject,anyTag,anyText,arrayWithCount,arrayWithRange,assertionWithObject,assertionWithPredicate,bool,byteString,byteStringBinaryRegex,capture,cbor,compressed,date,dateEarliest,dateIso8601,dateLatest,dateRange,dateRegex,digest,digestBinaryRegex,digestPrefix,display,elided,encrypted,group,knownValue,knownValueNamed,knownValueRegex,leaf,mapWithCount,mapWithRange,matches,nodeWithAssertionsCount,nodeWithAssertionsRange,notMatching,nullValue,number,numberGreaterThan,numberGreaterThanOrEqual,numberLessThan,numberLessThanOrEqual,numberNaN,numberRange,object,obscured,or,parseEnvelopePattern,paths,pathsWithCaptures,patternEquals,predicate,repeat,search,span,subject,tagged,taggedName,taggedRegex,text,textRegex,traverse,tryParseEnvelopePattern,unit,unwrap,wrapped"
   },
   {
    "name": "domain pattern-equals",

@@ -5,7 +5,9 @@ edition = "2021"
 publish = false
 
 [dependencies]
-bc-envelope-pattern = { path = "../../../../../bc-rust/bc-envelope-pattern-rust" }
+# The tracked reference release (see .github/versions.yml). To validate a
+# local checkout instead, add a `[patch.crates-io]` entry pointing at it.
+bc-envelope-pattern = "=0.14.0"
 bc-envelope = "0.43"
 dcbor = "0.25"
 serde = { version = "1", features = ["derive"] }

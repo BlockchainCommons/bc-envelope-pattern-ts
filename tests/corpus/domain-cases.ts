@@ -141,6 +141,10 @@ export const DOMAIN_CASES: Record<string, (m: Api) => string> = {
     ),
   "nest-501-not": (m) =>
     outcome(() => m.display(m.parseEnvelopePattern("!".repeat(501) + "*")).length),
+  "nest-1000-parens": (m) =>
+    outcome(
+      () => m.display(m.parseEnvelopePattern("(".repeat(1000) + "*" + ")".repeat(1000))).length,
+    ),
   "max-depth-option": (m) =>
     outcome(() => m.display(m.parseEnvelopePattern("((*))", { maxDepth: 1 }))),
   "max-depth-option-ok": (m) =>

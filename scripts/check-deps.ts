@@ -1,8 +1,8 @@
 /**
  * Dependency hygiene gate.
  *
- *   node scripts/check-deps.mjs          # no monorepo leftovers may survive
- *   node scripts/check-deps.mjs --zero   # additionally: zero runtime deps
+ *   bun scripts/check-deps.ts          # no monorepo leftovers may survive
+ *   bun scripts/check-deps.ts --zero   # additionally: zero runtime deps
  *
  * The first check is universal: an extracted repository must never ship a
  * `@bcts/*` dependency or a `workspace:` protocol range, both of which are
@@ -14,7 +14,10 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8")) as Record<
+  string,
+  Record<string, string> | undefined
+>;
 const zero = process.argv.includes("--zero");
 
 const groups = ["dependencies", "peerDependencies", "optionalDependencies", "devDependencies"];
@@ -34,7 +37,7 @@ for (const group of groups) {
 }
 
 if (zero) {
-  const runtime = Object.keys(pkg.dependencies ?? {});
+  const runtime = Object.keys(pkg["dependencies"] ?? {});
   if (runtime.length > 0) {
     console.error("zero-dependency policy violated:", runtime.join(", "));
     failed = true;

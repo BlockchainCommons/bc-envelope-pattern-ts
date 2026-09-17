@@ -12,7 +12,7 @@ import {
   any,
   and,
   or,
-  not,
+  notMatching,
   capture,
   search,
   traverse,
@@ -94,7 +94,7 @@ describe("Meta Pattern Tests", () => {
       const envelope = Envelope.from("hello");
 
       // "hello" is not a number
-      const notPat = not(anyNumber());
+      const notPat = notMatching(anyNumber());
       expect(matches(notPat, envelope)).toBe(true);
     });
 
@@ -102,7 +102,7 @@ describe("Meta Pattern Tests", () => {
       const envelope = Envelope.from(42);
 
       // 42 is a number
-      const notPat = not(anyNumber());
+      const notPat = notMatching(anyNumber());
       expect(matches(notPat, envelope)).toBe(false);
     });
   });

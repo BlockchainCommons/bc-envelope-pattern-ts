@@ -5,7 +5,7 @@
  * as a dCBOR pattern over the subject.
  */
 import { CborDate, Tag } from "@blockchaincommons/dcbor";
-import { tryParseDcborPrefix } from "@blockchaincommons/dcbor-parse";
+import { tryParseDcborItemPartial } from "@blockchaincommons/dcbor-parse";
 import { Digest } from "@blockchaincommons/components";
 import { UR, decodeURWith } from "@blockchaincommons/uniform-resources";
 import {
@@ -32,16 +32,16 @@ import {
   anyObject,
   anyPredicate,
   anySubject,
-  anyTagged,
+  anyTag,
   anyText,
   and,
   arrayWithCount,
   arrayWithRange,
   assertionWithObject,
   assertionWithPredicate,
-  boolean,
+  bool,
   byteString,
-  byteStringRegex,
+  byteStringBinaryRegex,
   capture,
   cborPattern,
   cborValue,
@@ -59,7 +59,7 @@ import {
   knownValueNamed,
   knownValueRegex,
   leaf,
-  not,
+  notMatching,
   nodeWithAssertionsRange,
   nullValue,
   number,
@@ -87,9 +87,6 @@ import {
 } from "../pattern/constructors";
 import { convertDcborPatternToEnvelopePattern } from "../pattern/dcbor-integration";
 
-/** The deepest nesting of groups, captures, `search`, `!` and the structure forms accepted by default. */
-export const DEFAULT_MAX_DEPTH = 500;
-
 const fail = (error: EnvelopePatternError): never => {
   throw error;
 };
@@ -111,19 +108,23 @@ const skipWs = (src: string, pos: number): number => {
 
 const U64_MAX = (1n << 64n) - 1n;
 
-/** Parses the pattern text a `Lexer` produces. */
+/** Parses the pattern text a `Lexer` produces; `maxDepth` bounds the nesting when given. */
 class Parser {
   private readonly lexer: Lexer;
-  private readonly maxDepth: number;
+  private readonly maxDepth: number | undefined;
   private depth = 0;
 
-  constructor(input: string, maxDepth: number) {
+  constructor(input: string, maxDepth: number | undefined) {
     this.lexer = new Lexer(input);
     this.maxDepth = maxDepth;
   }
 
+  /** Enters a nesting level at `at`, or throws `NestingTooDeep` past a `maxDepth`. */
   private enter(at: Span): void {
-    if (++this.depth > this.maxDepth) fail(EnvelopePatternError.nestingTooDeep(this.maxDepth, at));
+    this.depth++;
+    if (this.maxDepth !== undefined && this.depth > this.maxDepth) {
+      fail(EnvelopePatternError.nestingTooDeep(this.maxDepth, at));
+    }
   }
 
   private leave(): void {
@@ -203,7 +204,7 @@ class Parser {
       this.enter(t.span);
       const inner = this.parseNot();
       this.leave();
-      return not(inner);
+      return notMatching(inner);
     }
     return this.parseAnd();
   }
@@ -274,9 +275,9 @@ class Parser {
       case "BoolKeyword":
         return anyBool();
       case "BoolTrue":
-        return boolean(true);
+        return bool(true);
       case "BoolFalse":
-        return boolean(false);
+        return bool(false);
       case "NumberKeyword":
         return anyNumber();
       case "TextKeyword":
@@ -309,7 +310,7 @@ class Parser {
       case "HexPattern":
         return byteString(token.bytes);
       case "HexBinaryRegex":
-        return byteStringRegex(this.checkRegex(token.pattern, "bytes", t.span));
+        return byteStringBinaryRegex(this.checkRegex(token.pattern, "bytes", t.span));
       case "DateKeyword":
         return anyDate();
       case "DatePattern":
@@ -454,6 +455,7 @@ class Parser {
     const base = this.lexer.position();
     let pos = skipWs(src, 0);
     let pattern: Pattern;
+    // an error points at the end of the body, as the reference reports it
     if (src.startsWith("ur:", pos)) {
       const start = pos;
       while (pos < src.length && src[pos] !== ")") pos++;
@@ -464,7 +466,7 @@ class Parser {
         return fail(
           EnvelopePatternError.invalidUr(
             e instanceof Error ? e.message : String(e),
-            makeSpan(base + start, base + start + ur.length),
+            makeSpan(base + pos, base + pos),
           ),
         );
       }
@@ -474,7 +476,7 @@ class Parser {
       while (pos < src.length && /[0-9a-fA-F]/.test(src[pos])) pos++;
       const hex = src.slice(start, pos);
       if (hex.length === 0 || hex.length % 2 !== 0 || hex.length / 2 > Digest.DIGEST_SIZE) {
-        return fail(EnvelopePatternError.invalidHexString(makeSpan(base + start, base + pos)));
+        return fail(EnvelopePatternError.invalidHexString(makeSpan(base + pos, base + pos)));
       }
       const bytes = new Uint8Array(hex.length / 2);
       for (let i = 0; i < hex.length; i += 2) bytes[i / 2] = parseInt(hex.slice(i, i + 2), 16);
@@ -519,7 +521,7 @@ class Parser {
       pattern = cborPattern(parsed.value);
       pos = skipWs(src, pos);
     } else {
-      const parsed = tryParseDcborPrefix(src.slice(pos));
+      const parsed = tryParseDcborItemPartial(src.slice(pos));
       if (!parsed.ok) {
         return fail(EnvelopePatternError.invalidPattern(makeSpan(base + pos, base + src.length)));
       }
@@ -573,8 +575,10 @@ class Parser {
         return fail(EnvelopePatternError.invalidRange(makeSpan(base + pos, base + pos)));
       }
     } else {
-      // the whole remainder belongs to the array pattern
-      const parsed = tryParseDcborPattern(`[${src.slice(pos)}`, { maxDepth: this.maxDepth });
+      // the whole remainder belongs to the array pattern, read as `[…]`; a
+      // well-formed `[…]` therefore fails here (its own `]` is inside the
+      // remainder) and parses through the whole-input dCBOR fallback
+      const parsed = tryParseDcborPattern(`[${src.slice(pos)}]`, { maxDepth: this.maxDepth });
       if (!parsed.ok) {
         return fail(EnvelopePatternError.invalidPattern(makeSpan(base + pos, base + src.length)));
       }
@@ -592,19 +596,19 @@ class Parser {
     return pattern;
   }
 
-  /** `date'…'` content: a regex, a range, or one date. */
-  private parseDateContent(raw: string, at: Span): Pattern {
-    const content = raw.trim();
-    const invalid = (): never => fail(EnvelopePatternError.invalidDateFormat(at));
+  /** `date'…'` content: a regex, a range, or one date; an error spans the body between the quotes. */
+  private parseDateContent(content: string, at: Span): Pattern {
+    const body = makeSpan(at.start + "date'".length, at.end - 1);
+    const invalid = (): never => fail(EnvelopePatternError.invalidDateFormat(body));
     const toDate = (s: string): CborDate => {
       try {
-        return CborDate.fromString(s.trim());
+        return CborDate.fromString(s);
       } catch {
         return invalid();
       }
     };
     if (content.length >= 2 && content.startsWith("/") && content.endsWith("/")) {
-      return dateRegex(this.checkRegex(content.slice(1, -1), "text", at));
+      return dateRegex(this.checkRegex(content.slice(1, -1), "text", body));
     }
     if (content.includes("...")) {
       const parts = content.split("...");
@@ -620,7 +624,7 @@ class Parser {
 
   /** `tagged`, `tagged(x)`, `tagged(x, p)`: the body read as a dCBOR tagged pattern, else a bare tag. */
   private parseTagged(): Pattern {
-    if (this.peek()?.token.type !== "ParenOpen") return anyTagged();
+    if (this.peek()?.token.type !== "ParenOpen") return anyTag();
     this.next();
     const src = this.lexer.remainder();
     const base = this.lexer.position();
@@ -711,7 +715,7 @@ const parseU64 = (s: string): number | bigint | undefined => {
  * Parses `input` as a whole pattern: the envelope grammar first, then the
  * whole text as a dCBOR pattern over the subject.
  */
-export const parseAll = (input: string, maxDepth: number = DEFAULT_MAX_DEPTH): Pattern => {
+export const parseAll = (input: string, maxDepth?: number): Pattern => {
   const parser = new Parser(input, maxDepth);
   let pattern: Pattern;
   try {

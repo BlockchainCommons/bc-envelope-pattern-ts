@@ -4,11 +4,17 @@
  */
 import type { Pattern } from "../pattern/types";
 import { type DcborResult, EnvelopePatternError } from "../error";
-import { DEFAULT_MAX_DEPTH, parseAll } from "./parser";
+import { parseAll } from "./parser";
 
-/** How deep a pattern may nest; the field has a default. */
+/** An optional limit on how deep a pattern may nest. */
 export interface ParseOptions {
-  /** The deepest nesting of groups, captures, `search`, `!` and the structure forms accepted (a positive integer), 500 by default. */
+  /**
+   * The deepest nesting of groups, captures, `search`, `!` and the structure
+   * forms accepted (a positive integer). No limit by default: text nested a
+   * few thousand levels deep then exhausts the engine's stack with a
+   * `RangeError`. The limit also applies to the dCBOR patterns embedded in
+   * `cbor(/…/)`, `[…]` and `tagged(…)`.
+   */
   readonly maxDepth?: number | undefined;
 }
 
@@ -16,12 +22,12 @@ const requireSource = (input: string): void => {
   if (typeof input !== "string") throw new TypeError("pattern source must be a string");
 };
 
-const resolveMaxDepth = (options: ParseOptions | undefined): number => {
+const resolveMaxDepth = (options: ParseOptions | undefined): number | undefined => {
   if (options !== undefined && (options === null || typeof options !== "object")) {
     throw new TypeError("options must be an object");
   }
   const maxDepth = options?.maxDepth;
-  if (maxDepth === undefined) return DEFAULT_MAX_DEPTH;
+  if (maxDepth === undefined) return undefined;
   if (typeof maxDepth !== "number" || !Number.isInteger(maxDepth) || maxDepth < 1) {
     throw new RangeError("maxDepth must be a positive integer");
   }
@@ -31,7 +37,7 @@ const resolveMaxDepth = (options: ParseOptions | undefined): number => {
 /**
  * Parses a whole pattern string; whitespace may surround the pattern.
  *
- * @throws {EnvelopePatternError} If the string is not a pattern, has trailing input, or nests deeper than `maxDepth`
+ * @throws {EnvelopePatternError} If the string is not a pattern, has trailing input, or nests deeper than a given `maxDepth`
  * @throws {TypeError} If `input` is not a string
  * @throws {RangeError} If `maxDepth` is not a positive integer
  */

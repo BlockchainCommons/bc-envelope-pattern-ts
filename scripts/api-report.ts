@@ -2,8 +2,8 @@
  * Public API report via @microsoft/api-extractor.
  *
  * Usage:
- *   bun scripts/api-report.mjs --local   # (re)generate the api/<pkg>.api.md report
- *   bun scripts/api-report.mjs           # verify the committed report matches
+ *   bun scripts/api-report.ts --local   # (re)generate the api/<pkg>.api.md report
+ *   bun scripts/api-report.ts           # verify the committed report matches
  *
  * api-extractor requires a `.d.ts` entry point; tsdown emits `.d.mts`, so a
  * transient copy is made inside dist/ first. The committed report
@@ -20,8 +20,11 @@ import { Extractor, ExtractorConfig } from "@microsoft/api-extractor";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const local = process.argv.includes("--local");
-const REPORT = JSON.parse(readFileSync(join(root, "api-extractor.json"), "utf8")).apiReport
-  .reportFileName;
+const REPORT: string = (
+  JSON.parse(readFileSync(join(root, "api-extractor.json"), "utf8")) as {
+    apiReport: { reportFileName: string };
+  }
+).apiReport.reportFileName;
 
 const dmts = join(root, "dist", "index.d.mts");
 const dts = join(root, "dist", "index.d.ts");

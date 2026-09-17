@@ -8,7 +8,12 @@ import { KnownValue } from "@blockchaincommons/known-values";
 //#region src/error.d.ts
 /**
  * Errors: `EnvelopePatternError` for text that does not parse. Spans are
- * UTF-16 code-unit offsets into the source, always absolute.
+ * UTF-16 code-unit offsets into the source, always absolute: where the
+ * reference reports a span relative to the `date'…'`, `digest(…)`,
+ * `cbor(…)`, `tagged(…)` or `[…]` body it parsed, this library reports the
+ * same extent from the start of the source. Where the reference raises a
+ * bare `Unknown` (text it could not lex inside a construct), this library
+ * raises `UnrecognizedToken` or `InvalidPattern` with the span.
  *
  * @module error
  */
@@ -133,12 +138,12 @@ type EnvelopePatternErrorDetails = {
 } | {
   /** The discriminant. */
   readonly code: "InvalidHexString";
-  /** The literal. */
+  /** The `h'…'` literal, or for `digest(…)` the point just after the hex. */
   readonly span: Span;
 } | {
   /** The discriminant. */
   readonly code: "InvalidDateFormat";
-  /** The literal. */
+  /** The body between the quotes of `date'…'`. */
   readonly span: Span;
 } | {
   /** The discriminant. */
@@ -148,7 +153,7 @@ type EnvelopePatternErrorDetails = {
 } | {
   /** The discriminant. */
   readonly code: "InvalidUr";
-  /** The literal. */
+  /** The point just after the UR in `digest(…)`. */
   readonly span: Span;
   /** The UR decoder's reason. */
   readonly cause: string;
@@ -197,7 +202,7 @@ type EnvelopePatternErrorDetails = {
 } | {
   /** The discriminant. */
   readonly code: "InvalidPattern";
-  /** The body. */
+  /** The dCBOR pattern body, or the rest of the text an array pattern consumed. */
   readonly span: Span;
 } | {
   /** The discriminant. */
@@ -615,7 +620,7 @@ export declare function cbor(valueOrPattern: CborInput | Pattern$1): Pattern;
 /** `bool`: matches any boolean subject. */
 export declare const anyBool: () => Pattern;
 /** `true` / `false`: matches that boolean subject. */
-export declare const boolean: (value: boolean) => Pattern;
+export declare const bool: (value: boolean) => Pattern;
 /** `text`: matches any text subject. */
 export declare const anyText: () => Pattern;
 /** `"string"`: matches that text subject. */
@@ -657,7 +662,7 @@ export declare const anyByteString: () => Pattern;
 /** `h'hex'`: matches that byte-string subject. */
 export declare const byteString: (value: Uint8Array) => Pattern;
 /** `h'/regex/'`: matches a byte-string subject the byte regex matches. */
-export declare const byteStringRegex: (regex: RegexInput$1) => Pattern;
+export declare const byteStringBinaryRegex: (regex: RegexInput$1) => Pattern;
 /** `known`: matches any known-value subject. */
 export declare const anyKnownValue: () => Pattern;
 /** `'value'` / `'name'`: matches that known-value subject, given as a `KnownValue`, its number, or its name. */
@@ -683,7 +688,7 @@ export declare const mapWithCount: (count: number) => Pattern;
 /** `null`: matches a null subject. */
 export declare const nullValue: () => Pattern;
 /** `tagged`: matches any tagged subject. */
-export declare const anyTagged: () => Pattern;
+export declare const anyTag: () => Pattern;
 /** `tagged(tag, p)`: matches a tagged subject with that tag (a `Tag`, its number, or its registered name) whose content matches the dCBOR pattern. */
 export declare const tagged: (tag: Tag | number | bigint | string, pattern: Pattern$1) => Pattern;
 /** `tagged(name, p)`: matches a tagged subject whose tag is registered as `name`. */
@@ -749,7 +754,7 @@ export declare const and: (...patterns: Pattern[]) => Pattern;
  */
 export declare const or: (...patterns: Pattern[]) => Pattern;
 /** `!p`: matches when `pattern` does not. */
-export declare const not: (pattern: Pattern) => Pattern;
+export declare const notMatching: (pattern: Pattern) => Pattern;
 /** `a -> b -> …`: each pattern matched from where the previous one ended; no pattern is `!*`. */
 export declare const traverse: (...patterns: Pattern[]) => Pattern;
 /** `search(p)`: matches at every node of the tree where `pattern` matches. */
@@ -762,15 +767,21 @@ export declare const group: (pattern: Pattern) => Pattern;
 export declare const capture: (name: string, pattern: Pattern) => Pattern;
 //#endregion
 //#region src/parse/index.d.ts
-/** How deep a pattern may nest; the field has a default. */
+/** An optional limit on how deep a pattern may nest. */
 interface ParseOptions {
-  /** The deepest nesting of groups, captures, `search`, `!` and the structure forms accepted (a positive integer), 500 by default. */
+  /**
+   * The deepest nesting of groups, captures, `search`, `!` and the structure
+   * forms accepted (a positive integer). No limit by default: text nested a
+   * few thousand levels deep then exhausts the engine's stack with a
+   * `RangeError`. The limit also applies to the dCBOR patterns embedded in
+   * `cbor(/…/)`, `[…]` and `tagged(…)`.
+   */
   readonly maxDepth?: number | undefined;
 }
 /**
  * Parses a whole pattern string; whitespace may surround the pattern.
  *
- * @throws {EnvelopePatternError} If the string is not a pattern, has trailing input, or nests deeper than `maxDepth`
+ * @throws {EnvelopePatternError} If the string is not a pattern, has trailing input, or nests deeper than a given `maxDepth`
  * @throws {TypeError} If `input` is not a string
  * @throws {RangeError} If `maxDepth` is not a positive integer
  */

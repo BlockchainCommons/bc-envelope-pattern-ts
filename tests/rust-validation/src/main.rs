@@ -1,4 +1,4 @@
-//! Replays tests/vectors/vectors.json against bc-envelope-pattern 0.14.0.
+//! Replays tests/vectors/vectors.json against the tracked bc-envelope-pattern release.
 //!
 //!   cargo run --release -- ../vectors/vectors.json
 use bc_envelope::prelude::*;
@@ -69,19 +69,21 @@ fn run(r: &serde_json::Value) -> String {
     format_paths_with_captures_opt(&paths, &caps, opts(&o))
 }
 /// Expected divergences (see RUST_DIVERGENCES.md). Order matters: the
-/// port-right and dialect classes come first, then the error-taxonomy
-/// classes.
+/// port-right classes come first, then the error-taxonomy classes.
 ///
 /// R1  non-ASCII text literals: the reference decodes them byte by byte.
 /// R2  a non-ASCII byte or known-value regex loses its closing quote there.
 /// R3  `tagged(name, …)` / `tagged(/re/, …)` never match decoded data there.
 /// R4  three or more `|` alternatives: only the first split runs there.
 /// R5  captures under a structure pattern inside `search` are dropped there.
-/// R6  capture paths on a known-value subject carry the envelope twice there.
 /// R7  `date'/'` panics there.
-/// X1  `\w`, `\d`, `\b` are ASCII in JavaScript regexes.
-/// S1  both reject with the same variant at a different span.
-/// S2  both reject with different variants.
+/// U-unknown   the reference raises its bare `Unknown` (no span) where an
+///             inner construct met text it could not lex; the port reports a
+///             code with the span.
+/// U-relative  the same variant; the reference's span is relative to the
+///             `date'…'`, `digest(…)`, `cbor(…)`, `tagged(…)` or `[…]` body it
+///             was parsed from, the port's is absolute: equal once the body's
+///             offset is added.
 /// D1  the reference displays an infinite number as `inf`.
 fn expected_divergence(recipe: &serde_json::Value, got: &str, want: &str) -> Option<&'static str> {
     let k = recipe["k"].as_str().unwrap_or("");
@@ -105,9 +107,25 @@ fn expected_divergence(recipe: &serde_json::Value, got: &str, want: &str) -> Opt
     if re(r"search\(.*\b(subj|unwrap|pred|obj|assert\w*)\(.*@\w+\(").is_match(pat) && !rt && !tt
         && paths_of(got) == paths_of(want) && want.contains("captures{")
         && got.split(" captures{").nth(1).map_or(true, |c| c.trim_end_matches('}').split(';').all(|e| want.contains(e))) { return Some("R5"); }
-    if hex.contains("d99c40") && pat.contains("cbor(/") && pat.contains('@') && !rt && !tt && paths_of(got) == paths_of(want) { return Some("R6"); }
-    if k != "parse" && re(r"\\[wdb]").is_match(pat) && !rt && !tt && !empty(got) && empty(want) { return Some("X1"); }
-    if rt && tt { return Some(if variant(got) == variant(want) { "S1" } else { "S2" }); }
+    if rt && tt && variant(got) == "Unknown" { return Some("U-unknown"); }
+    if rt && tt && variant(got) == variant(want) {
+        // the reference's span is relative to a body whose opener ends at the offset difference
+        let bounds = |s: &str| -> Option<(usize, usize)> {
+            let at = s.rfind('@')?;
+            let mut it = s[at + 1..].split('-');
+            Some((it.next()?.parse().ok()?, it.next()?.parse().ok()?))
+        };
+        if let (Some((gs, ge)), Some((ws, we))) = (bounds(got), bounds(want)) {
+            if ge - gs == we - ws && ws > gs {
+                let k = ws - gs;
+                let units: Vec<u16> = pat.encode_utf16().take(k).collect();
+                let prefix = String::from_utf16_lossy(&units);
+                if prefix.ends_with("date'") || prefix.ends_with('(') || prefix.ends_with('[') {
+                    return Some("U-relative");
+                }
+            }
+        }
+    }
     if k == "parse" && got.replace("inf", "Infinity") == want { return Some("D1"); }
     None
 }

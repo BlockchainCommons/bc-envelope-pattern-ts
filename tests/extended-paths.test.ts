@@ -9,7 +9,7 @@
  * the Rust fixture strings.
  */
 
-import { tryParseDcbor } from "@blockchaincommons/dcbor-parse";
+import { tryParseDcborItem } from "@blockchaincommons/dcbor-parse";
 import { describe, it, expect } from "vitest";
 import { Envelope } from "@blockchaincommons/envelope";
 import { tryParseEnvelopePattern, paths as patternPaths } from "../src";
@@ -37,7 +37,7 @@ describe("cbor pattern extended paths (test_extended_paths.rs)", () => {
   });
 
   it("returns extended paths through a nested map+array structure", () => {
-    const parsed = tryParseDcbor('{"name": "Alice", "scores": [95, 87, 92]}');
+    const parsed = tryParseDcborItem('{"name": "Alice", "scores": [95, 87, 92]}');
     expect(parsed.ok).toBe(true);
     if (!parsed.ok) return;
     const envelope = Envelope.from(parsed.value as unknown as number);

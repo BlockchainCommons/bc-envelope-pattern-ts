@@ -148,6 +148,8 @@ dependencies = [
 [[package]]
 name = "bc-envelope-pattern"
 version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b4dc709bd73ad68b7bfa53117815c68736d54d8111dfb4bff40f191ede8758a1"
 dependencies = [
  "bc-components",
  "bc-envelope",
