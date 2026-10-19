@@ -205,6 +205,7 @@ Runnable examples live in the [`examples/`](https://github.com/BlockchainCommons
 
 ### Version History
 
+- **1.0.0-beta.5 (October 19, 2026)** - Installs with npm on a host without Bun, with its `@blockchaincommons/*` dependencies at 1.0.0-beta.5 ([bc-components-ts#11](https://github.com/BlockchainCommons/bc-components-ts/issues/11)). No code changes.
 - **1.0.0-beta.1 (September 9, 2026)** - Initial beta implementation.
 
 ### Roadmap
